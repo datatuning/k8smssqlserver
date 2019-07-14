@@ -1,0 +1,68 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mssql1-volume
+  labels:
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: "/var/opt/mssql"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8snode01
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mssql2-volume
+  labels:
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: "/var/opt/mssql"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8snode02
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mssql3-volume
+  labels:
+    type: local
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: "/var/opt/mssql"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8snode03
