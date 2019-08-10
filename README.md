@@ -136,3 +136,28 @@ Criar os Services para expor o no primario e os nos secundarios do AlwaysON:
 `` #kubectl get service --namespace ag1 ``
 
 Caso tudo tenha dado certo, agora basta verificar a porta do ag-primary e utilizar o ip externo do Master juntamente com a porta para conectar no SQL Server.
+
+Conecte no ag-primary utilizando o IP Externo do Master e a porta listada no get services.
+
+Apos conectado, abre uma nova query e execute os comandos a seguir para criar o banco de dados, coloca-lo no AG e crie uma tabela neste banco de dados inserindo dados para verificar se tudo esta em pleno funcionamento:
+
+
+`` CREATE DATABASE [TestAG1]`` 
+`` GO`` 
+`` BACKUP DATABASE [TestAG1] TO DISK = 'nul'`` 
+`` BACKUP LOG [TestAG1] TO DISK = 'nul'`` 
+`` GO`` 
+`` ALTER AVAILABILITY GROUP [ag1] ADD DATABASE [TestAG1]`` 
+`` GO`` 
+
+`` USE [TestAG1]`` 
+`` GO`` 
+
+`` CREATE TABLE TEST(`` 
+`` 	A INT IDENTITY`` 
+`` 	,B VARCHAR(10)`` 
+`` 	,C DATETIME`` 
+`` )`` 
+
+`` INSERT INTO TEST VALUES('DOCKER',GETDATE());`` 
+`` INSERT INTO TEST VALUES('K8S',GETDATE());`` 
